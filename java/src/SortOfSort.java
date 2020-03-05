@@ -2,32 +2,43 @@ public class SortOfSort {
     public void sortOfSort(int[] array) {
         int numPass = 0;
         int front = 0;
-        int placeOfChange = array.length - 1;
-        for (int i = array.length - 1; i >= 0; i--) {
-            int maxIndex = 0;
-            for (int j = front; j <= i; j++) {
-                if (array[j] > array[maxIndex]) {
-                    maxIndex = j;
-                }
+        int end = array.length - 1;
+
+        while(front != end) {
+            int index = findMaxIndex(array, front, end);
+            if(numPass % 4 < 2){
+                swapValue(array, end, index);
+                end--;
             }
+            else{
+                swapValue(array, front, index);
+                front++;
+            }
+            print(array);
             numPass++;
-            if(numPass > 2 && numPass % 2 == 1){
-                if(placeOfChange == array.length - 1){
-                    placeOfChange = front;
-                }
-                else{
-                    placeOfChange = array.length - 1;
-                    front++;
-                }
+        }
+    }
+
+    public void print(int[]nums){
+        for(int i = 0; i < nums.length; i++){
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public void swapValue(int[]array, int placeOfChange, int index){
+        int temp = array[placeOfChange];
+        array[placeOfChange] = array[index];
+        array[index] = temp;
+    }
+
+    public int findMaxIndex(int[] nums, int front, int end){
+        int maxIndex = front;
+        for(int i = front; i <= end; i++){
+            if (nums[i] > nums[maxIndex]) {
+                maxIndex = i;
             }
-            int temp = array[placeOfChange];
-            array[placeOfChange] = array[maxIndex];
-            array[maxIndex] = temp;
-
         }
-        for(int i = 0; i < array.length; i++){
-            System.out.print(array[1] + " ");
-        }
-
+        return maxIndex;
     }
 }
